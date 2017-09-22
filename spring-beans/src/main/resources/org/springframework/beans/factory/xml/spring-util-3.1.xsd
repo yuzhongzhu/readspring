@@ -8,205 +8,217 @@
 		elementFormDefault="qualified"
 		attributeFormDefault="unqualified">
 
-	<xsd:import namespace="http://www.springframework.org/schema/beans" schemaLocation="http://www.springframework.org/schema/beans/spring-beans-3.1.xsd"/>
-	<xsd:import namespace="http://www.springframework.org/schema/tool" schemaLocation="http://www.springframework.org/schema/tool/spring-tool-3.1.xsd"/>
+	<import namespace="http://www.springframework.org/schema/beans" schemaLocation="http://www.springframework.org/schema/beans/spring-beans-3.1.xsd" />
+	<import namespace="http://www.springframework.org/schema/tool" schemaLocation="http://www.springframework.org/schema/tool/spring-tool-3.1.xsd" />
 
-	<xsd:element name="constant">
-		<xsd:annotation>
-			<xsd:documentation>
+	<element name="constant">
+		
+        <annotation>
+			<documentation>
 	Reference a public, static field on a type and expose its value as
 	a bean. For example <code>&lt;util:constant static-field=&quot;java.lang.Integer.MAX_VALUE&quot;/&gt;</code>.
-			</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexType>
-			<xsd:attribute name="id" type="xsd:string"/>
-			<xsd:attribute name="static-field" type="xsd:string" use="required"/>
-		</xsd:complexType>
-	</xsd:element>
+			</documentation>
+		</annotation>
+        
+        <complexType>
+			<attribute name="id" type="xsd:string" />
+			<attribute name="static-field" type="xsd:string" use="required" />
+		</complexType>
+    </element>
 
-	<xsd:element name="property-path">
-		<xsd:annotation>
-			<xsd:documentation>
+	<element name="property-path">
+		
+        <annotation>
+			<documentation>
 	Reference a property on a bean (or as a nested value) and expose its values as
 	a bean. For example &lt;util:property-path path=&quot;order.customer.name&quot;/&gt;.
-			</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexType>
-			<xsd:attribute name="id" type="xsd:string"/>
-			<xsd:attribute name="path" type="xsd:string" use="required"/>
-		</xsd:complexType>
-	</xsd:element>
+			</documentation>
+		</annotation>
+        
+        <complexType>
+			<attribute name="id" type="xsd:string" />
+			<attribute name="path" type="xsd:string" use="required" />
+		</complexType>
+    </element>
 
-	<xsd:element name="list">
-		<xsd:annotation>
-			<xsd:documentation source="java:org.springframework.beans.factory.config.ListFactoryBean">
+	<element name="list">
+		
+        <annotation>
+			<documentation source="java:org.springframework.beans.factory.config.ListFactoryBean">
 	Builds a List instance of the specified type, populated with the specified content.
-			</xsd:documentation>
-			<xsd:appinfo>
+			</documentation>
+			<appinfo>
 				<tool:annotation>
-					<tool:exports type="java.util.List"/>
+					<tool:exports type="java.util.List" />
 				</tool:annotation>
-			</xsd:appinfo>
-		</xsd:annotation>
-		<xsd:complexType>
-			<xsd:complexContent>
-				<xsd:extension base="beans:listOrSetType">
-					<xsd:attribute name="id" type="xsd:string"/>
-					<xsd:attribute name="list-class" type="xsd:string">
-						<xsd:annotation>
-							<xsd:appinfo>
+			</appinfo>
+		</annotation>
+        
+        <complexType>
+			<complexContent>
+				<extension base="beans:listOrSetType">
+					<attribute name="id" type="xsd:string" />
+					<attribute name="list-class" type="xsd:string">
+						<annotation>
+							<appinfo>
 								<tool:annotation>
-									<tool:expected-type type="java.lang.Class"/>
-									<tool:assignable-to type="java.util.List"/>
+									<tool:expected-type type="java.lang.Class" />
+									<tool:assignable-to type="java.util.List" />
 								</tool:annotation>
-							</xsd:appinfo>
-						</xsd:annotation>
-					</xsd:attribute>
-					<xsd:attribute name="scope" type="xsd:string">
-						<xsd:annotation>
-							<xsd:documentation><![CDATA[
+							</appinfo>
+						</annotation>
+					</attribute>
+					<attribute name="scope" type="xsd:string">
+						<annotation>
+							<documentation><![CDATA[
 	The scope of this collection bean: typically "singleton" (one shared instance,
 	which will be returned by all calls to getBean with the given id), or
 	"prototype" (independent instance resulting from each call to getBean).
 	Default is "singleton". Further scopes, such as "request" or "session",
 	might be supported by extended bean factories (e.g. in a web environment).
-							]]></xsd:documentation>
-						</xsd:annotation>
-					</xsd:attribute>
-				</xsd:extension>
-			</xsd:complexContent>
-		</xsd:complexType>
-	</xsd:element>
+							]]></documentation>
+						</annotation>
+					</attribute>
+				</extension>
+			</complexContent>
+		</complexType>
+    </element>
 
-	<xsd:element name="set">
-		<xsd:annotation>
-			<xsd:documentation source="java:org.springframework.beans.factory.config.SetFactoryBean">
+	<element name="set">
+		
+        <annotation>
+			<documentation source="java:org.springframework.beans.factory.config.SetFactoryBean">
 	Builds a Set instance of the specified type, populated with the specified content.
-			</xsd:documentation>
-			<xsd:appinfo>
+			</documentation>
+			<appinfo>
 				<tool:annotation>
-					<tool:exports type="java.util.Set"/>
+					<tool:exports type="java.util.Set" />
 				</tool:annotation>
-			</xsd:appinfo>
-		</xsd:annotation>
-		<xsd:complexType>
-			<xsd:complexContent>
-				<xsd:extension base="beans:listOrSetType">
-					<xsd:attribute name="id" type="xsd:string"/>
-					<xsd:attribute name="set-class" type="xsd:string">
-						<xsd:annotation>
-							<xsd:appinfo>
+			</appinfo>
+		</annotation>
+        
+        <complexType>
+			<complexContent>
+				<extension base="beans:listOrSetType">
+					<attribute name="id" type="xsd:string" />
+					<attribute name="set-class" type="xsd:string">
+						<annotation>
+							<appinfo>
 								<tool:annotation>
-									<tool:expected-type type="java.lang.Class"/>
-									<tool:assignable-to type="java.util.Set"/>
+									<tool:expected-type type="java.lang.Class" />
+									<tool:assignable-to type="java.util.Set" />
 								</tool:annotation>
-							</xsd:appinfo>
-						</xsd:annotation>
-					</xsd:attribute>
-					<xsd:attribute name="scope" type="xsd:string">
-						<xsd:annotation>
-							<xsd:documentation><![CDATA[
+							</appinfo>
+						</annotation>
+					</attribute>
+					<attribute name="scope" type="xsd:string">
+						<annotation>
+							<documentation><![CDATA[
 	The scope of this collection bean: typically "singleton" (one shared instance,
 	which will be returned by all calls to getBean with the given id), or
 	"prototype" (independent instance resulting from each call to getBean).
 	Default is "singleton". Further scopes, such as "request" or "session",
 	might be supported by extended bean factories (e.g. in a web environment).
-							]]></xsd:documentation>
-						</xsd:annotation>
-					</xsd:attribute>
-				</xsd:extension>
-			</xsd:complexContent>
-		</xsd:complexType>
-	</xsd:element>
+							]]></documentation>
+						</annotation>
+					</attribute>
+				</extension>
+			</complexContent>
+		</complexType>
+    </element>
 
-	<xsd:element name="map">
-		<xsd:annotation>
-			<xsd:documentation source="java:org.springframework.beans.factory.config.MapFactoryBean">
+	<element name="map">
+		
+        <annotation>
+			<documentation source="java:org.springframework.beans.factory.config.MapFactoryBean">
 	Builds a Map instance of the specified type, populated with the specified content.
-			</xsd:documentation>
-			<xsd:appinfo>
+			</documentation>
+			<appinfo>
 				<tool:annotation>
-					<tool:exports type="java.util.Map"/>
+					<tool:exports type="java.util.Map" />
 				</tool:annotation>
-			</xsd:appinfo>
-		</xsd:annotation>
-		<xsd:complexType>
-			<xsd:complexContent>
-				<xsd:extension base="beans:mapType">
-					<xsd:attribute name="id" type="xsd:string"/>
-					<xsd:attribute name="map-class" type="xsd:string">
-						<xsd:annotation>
-							<xsd:appinfo>
+			</appinfo>
+		</annotation>
+        
+        <complexType>
+			<complexContent>
+				<extension base="beans:mapType">
+					<attribute name="id" type="xsd:string" />
+					<attribute name="map-class" type="xsd:string">
+						<annotation>
+							<appinfo>
 								<tool:annotation>
-									<tool:expected-type type="java.lang.Class"/>
-									<tool:assignable-to type="java.util.Map"/>
+									<tool:expected-type type="java.lang.Class" />
+									<tool:assignable-to type="java.util.Map" />
 								</tool:annotation>
-							</xsd:appinfo>
-						</xsd:annotation>
-					</xsd:attribute>
-					<xsd:attribute name="scope" type="xsd:string">
-						<xsd:annotation>
-							<xsd:documentation><![CDATA[
+							</appinfo>
+						</annotation>
+					</attribute>
+					<attribute name="scope" type="xsd:string">
+						<annotation>
+							<documentation><![CDATA[
 	The scope of this collection bean: typically "singleton" (one shared instance,
 	which will be returned by all calls to getBean with the given id), or
 	"prototype" (independent instance resulting from each call to getBean).
 	Default is "singleton". Further scopes, such as "request" or "session",
 	might be supported by extended bean factories (e.g. in a web environment).
-							]]></xsd:documentation>
-						</xsd:annotation>
-					</xsd:attribute>
-				</xsd:extension>
-			</xsd:complexContent>
-		</xsd:complexType>
-	</xsd:element>
+							]]></documentation>
+						</annotation>
+					</attribute>
+				</extension>
+			</complexContent>
+		</complexType>
+    </element>
 
-	<xsd:element name="properties">
-		<xsd:annotation>
-			<xsd:documentation source="java:org.springframework.beans.factory.config.PropertiesFactoryBean">
+	<element name="properties">
+		
+        <annotation>
+			<documentation source="java:org.springframework.beans.factory.config.PropertiesFactoryBean">
 	Loads a Properties instance from the resource location specified by the '<code>location</code>' attribute.
-			</xsd:documentation>
-			<xsd:appinfo>
+			</documentation>
+			<appinfo>
 				<tool:annotation>
-					<tool:exports type="java.util.Properties"/>
+					<tool:exports type="java.util.Properties" />
 				</tool:annotation>
-			</xsd:appinfo>
-		</xsd:annotation>
-		<xsd:complexType>
-			<xsd:complexContent>
-				<xsd:extension base="beans:propsType">
-					<xsd:attribute name="id" type="xsd:string"/>
-					<xsd:attribute name="location" type="xsd:string">
-						<xsd:annotation>
-							<xsd:appinfo>
+			</appinfo>
+		</annotation>
+        
+        <complexType>
+			<complexContent>
+				<extension base="beans:propsType">
+					<attribute name="id" type="xsd:string" />
+					<attribute name="location" type="xsd:string">
+						<annotation>
+							<appinfo>
 								<tool:annotation>
-									<tool:expected-type type="org.springframework.core.io.Resource"/>
+									<tool:expected-type type="org.springframework.core.io.Resource" />
 								</tool:annotation>
-							</xsd:appinfo>
-						</xsd:annotation>
-					</xsd:attribute>
-					<xsd:attribute name="local-override" type="xsd:boolean">
-						<xsd:annotation>
-							<xsd:documentation><![CDATA[
+							</appinfo>
+						</annotation>
+					</attribute>
+					<attribute name="local-override" type="xsd:boolean">
+						<annotation>
+							<documentation><![CDATA[
 	Specifies whether local properties override properties from files.
 	Default is "false": properties from files override local defaults.
 	If set to "true", local properties will override defaults from files.
-							]]></xsd:documentation>
-						</xsd:annotation>
-					</xsd:attribute>
-					<xsd:attribute name="scope" type="xsd:string">
-						<xsd:annotation>
-							<xsd:documentation><![CDATA[
+							]]></documentation>
+						</annotation>
+					</attribute>
+					<attribute name="scope" type="xsd:string">
+						<annotation>
+							<documentation><![CDATA[
 	The scope of this collection bean: typically "singleton" (one shared instance,
 	which will be returned by all calls to getBean with the given id), or
 	"prototype" (independent instance resulting from each call to getBean).
 	Default is "singleton". Further scopes, such as "request" or "session",
 	might be supported by extended bean factories (e.g. in a web environment).
-							]]></xsd:documentation>
-						</xsd:annotation>
-					</xsd:attribute>
-				</xsd:extension>
-			</xsd:complexContent>
-		</xsd:complexType>
-	</xsd:element>
+							]]></documentation>
+						</annotation>
+					</attribute>
+				</extension>
+			</complexContent>
+		</complexType>
+    </element>
 
-</xsd:schema>
+<schema></schema>

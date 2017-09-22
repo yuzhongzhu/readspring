@@ -456,7 +456,7 @@ public class BeanDefinitionParserDelegate {
 		if (containingBean == null) {
 			checkNameUniqueness(beanName, aliases, ele);
 		}
-
+		//统一创建为GenericBeanDefinition
 		AbstractBeanDefinition beanDefinition = parseBeanDefinitionElement(ele, beanName, containingBean);
 		if (beanDefinition != null) {
 			if (!StringUtils.hasText(beanName)) {
@@ -534,6 +534,7 @@ public class BeanDefinitionParserDelegate {
 			if (ele.hasAttribute(PARENT_ATTRIBUTE)) {
 				parent = ele.getAttribute(PARENT_ATTRIBUTE);
 			}
+			//统一创建为GenericBeanDefinition
 			AbstractBeanDefinition bd = createBeanDefinition(className, parent);
 
 			parseBeanDefinitionAttributes(ele, beanName, containingBean, bd);
@@ -1403,7 +1404,9 @@ public class BeanDefinitionParserDelegate {
 
 	public BeanDefinition parseCustomElement(Element ele, BeanDefinition containingBd) {
 		String namespaceUri = getNamespaceURI(ele);
-		NamespaceHandler handler = this.readerContext.getNamespaceHandlerResolver().resolve(namespaceUri);
+		//解析其他的命名空间的标签
+		NamespaceHandlerResolver  resolver = this.readerContext.getNamespaceHandlerResolver();
+		NamespaceHandler handler =   resolver.resolve(namespaceUri);
 		if (handler == null) {
 			error("Unable to locate Spring NamespaceHandler for XML schema namespace [" + namespaceUri + "]", ele);
 			return null;
@@ -1485,7 +1488,8 @@ public class BeanDefinitionParserDelegate {
 	 * @param node the node
 	 */
 	public String getNamespaceURI(Node node) {
-		return node.getNamespaceURI();
+		String uri = node.getNamespaceURI();
+		return uri;
 	}
 
 	/**

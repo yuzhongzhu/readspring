@@ -241,6 +241,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 
 		// Eagerly check singleton cache for manually registered singletons.
 		//判断单例缓存中是否存在当前的bean对象，初始化不存在，默认因为在加载资源信息 仅是将xml中定义的信息交给了BeanFacotry持有
+		//sharedInstance==null
 		Object sharedInstance = getSingleton(beanName);
 		if (sharedInstance != null && args == null) {
 			if (logger.isDebugEnabled()) {
@@ -265,6 +266,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 			}
 
 			// Check if bean definition exists in this factory.
+			//new BeanFactory对象并未创建父类对象
 			BeanFactory parentBeanFactory = getParentBeanFactory();//默认父BeanFactroy为空
 			if (parentBeanFactory != null && !containsBeanDefinition(beanName)) {
 				// Not found -> check parent.
@@ -280,12 +282,15 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 			}
 			//判断是否仅仅做类型检查，如果不是的话，做记录
 			if (!typeCheckOnly) {
-				markBeanAsCreated(beanName);
+				markBeanAsCreated(beanName);//判断当前是否应被标记为以创建的对象，将当前的beanName加入以创建对象内存中
 			}
 
 			try {
-				final RootBeanDefinition mbd = getMergedLocalBeanDefinition(beanName);//从GenericBeanDefinition中获取，如果当前bean存在集成关系，则也会合并父类的属性
-				checkMergedBeanDefinition(mbd, beanName, args);//校验当前是否定义为抽象类
+				//mergedBeanDefinitions在此中获取，如果已经存在，则标识已创建
+				//否则获取通过配置创建的beanDefinition对象【GenericBeanDefinition对象示例】，通过此创建RootBeanDefinition对象，
+				final RootBeanDefinition mbd = getMergedLocalBeanDefinition(beanName);
+				//校验当前是否定义为抽象
+				checkMergedBeanDefinition(mbd, beanName, args);
 
 				// Guarantee initialization of beans that the current bean depends on.
 				//当前bean实例化存在依赖关系，则需要递归实例化其依赖
@@ -302,8 +307,9 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 				}
 
 				// Create bean instance.
+				// 匿名内部类回调处理
 				if (mbd.isSingleton()) {
-					sharedInstance = getSingleton(beanName, new ObjectFactory<Object>() {//回调函数
+					sharedInstance = getSingleton(beanName, new ObjectFactory<Object>() {
 						@Override
 						public Object getObject() throws BeansException {
 							try {

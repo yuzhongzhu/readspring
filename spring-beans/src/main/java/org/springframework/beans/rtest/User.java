@@ -16,23 +16,30 @@
 
 package org.springframework.beans.rtest;
 
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.beans.factory.xml.XmlBeanFactory;
-import org.springframework.core.io.ClassPathResource;
-
 
 /**
  * 
  * @author Administrator
  * @since 4.3
  */
-public class Test {
-	public static void main(String[] args) {
-		/*BeanFactory beanF = new XmlBeanFactory(new ClassPathResource("org/springframework/beans/rtest/beanFactoryTest.xml"));
-		MyTestBean testBean = (MyTestBean) beanF.getBean("mytestBean");
-		System.out.println(testBean);*/
-		DefaultListableBeanFactory beanFactory = new XmlBeanFactory(new ClassPathResource("selfdefinition.xml"));
-		User user = (User) beanFactory.getBean("testBean");
-		System.out.println(user.getUserName()+" "+user.getEmail());
+public class User {
+	private String userName;
+	private String email;
+	
+	public String getUserName() {
+		return userName;
 	}
+	
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 }

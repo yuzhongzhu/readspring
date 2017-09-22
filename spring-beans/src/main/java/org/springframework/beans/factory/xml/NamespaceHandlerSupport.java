@@ -71,7 +71,9 @@ public abstract class NamespaceHandlerSupport implements NamespaceHandler {
 	 */
 	@Override
 	public BeanDefinition parse(Element element, ParserContext parserContext) {
-		return findParserForElement(element, parserContext).parse(element, parserContext);
+		//解析元素标签
+		 BeanDefinitionParser beanParser = findParserForElement(element, parserContext);
+		 return beanParser.parse(element, parserContext);
 	}
 
 	/**
@@ -80,7 +82,7 @@ public abstract class NamespaceHandlerSupport implements NamespaceHandler {
 	 */
 	private BeanDefinitionParser findParserForElement(Element element, ParserContext parserContext) {
 		String localName = parserContext.getDelegate().getLocalName(element);
-		BeanDefinitionParser parser = this.parsers.get(localName);
+		BeanDefinitionParser parser = this.parsers.get(localName);//获取刚刚注入的解析器
 		if (parser == null) {
 			parserContext.getReaderContext().fatal(
 					"Cannot locate BeanDefinitionParser for element [" + localName + "]", element);

@@ -118,15 +118,18 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 	 */
 	@Override
 	protected final void refreshBeanFactory() throws BeansException {
-		if (hasBeanFactory()) {
+		if (hasBeanFactory()) {//判断是否已经存在，如果存在则对相关缓存进行清除后销毁已存在的
 			destroyBeans();
-			closeBeanFactory();
+			closeBeanFactory(); //ID置空  beanFactory置null
 		}
 		try {
-			DefaultListableBeanFactory beanFactory = createBeanFactory();
+			DefaultListableBeanFactory beanFactory = createBeanFactory();//new 一个DefaultListableBeanFactory对象
 			beanFactory.setSerializationId(getId());
-			customizeBeanFactory(beanFactory);//org.springframework.context.support.AbstractRefreshableApplicationContext.customizeBeanFactory(DefaultListableBeanFactory)
-			loadBeanDefinitions(beanFactory);
+			//设置是否允许同名覆盖以及循环依赖 默认均为false
+			////org.springframework.context.support.AbstractRefreshableApplicationContext.customizeBeanFactory(DefaultListableBeanFactory)
+			customizeBeanFactory(beanFactory);
+			//org.springframework.context.support.AbstractXmlApplicationContext.loadBeanDefinitions(DefaultListableBeanFactory)
+			loadBeanDefinitions(beanFactory);//创建documentReader 解析加载xml
 			synchronized (this.beanFactoryMonitor) {
 				this.beanFactory = beanFactory;
 			}

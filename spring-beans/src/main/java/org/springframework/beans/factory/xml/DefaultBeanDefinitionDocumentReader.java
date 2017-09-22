@@ -124,6 +124,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 		//创建bean解析代理类，并初始化当前配置文件中bean的所有属性默认配置
 		//针对beans标签进行属性的默认初始化操作，为节点bean未配置设置默认属性值
 		this.delegate = createDelegate(this.getReaderContext(), root, parent);
+		
 		if (this.delegate.isDefaultNamespace(root)) {
 			String profileSpec = root.getAttribute(PROFILE_ATTRIBUTE);
 			if (StringUtils.hasText(profileSpec)) {
@@ -140,7 +141,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 		}
 
 		preProcessXml(root);//空处理 可复写
-		parseBeanDefinitions(root, this.delegate);//重点
+		this.parseBeanDefinitions(root, this.delegate);//重点
 		postProcessXml(root);//空处理 可复写
 
 		this.delegate = parent;
@@ -176,7 +177,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 				}
 			}
 		}
-		else {//这个定制自己的并加载spring容器
+		else {//这个定制自己的标签并加载spring容器
 			delegate.parseCustomElement(root);
 		}
 	}
@@ -298,8 +299,11 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 	 * and registering it with the registry.
 	 */
 	protected void processBeanDefinition(Element ele, BeanDefinitionParserDelegate delegate) {
+		//统一创建为GenericBeanDefinition 
+		//org.springframework.beans.factory.support.BeanDefinitionReaderUtils.createBeanDefinition(String, String, ClassLoader)
 		BeanDefinitionHolder bdHolder = delegate.parseBeanDefinitionElement(ele);
 		if (bdHolder != null) {
+			//对bean的自定义属性进行解析处理
 			bdHolder = delegate.decorateBeanDefinitionIfRequired(ele, bdHolder);
 			try {
 				// Register the final decorated instance.

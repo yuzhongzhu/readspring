@@ -265,6 +265,7 @@ public class GenericApplicationContext extends AbstractApplicationContext implem
 		}
 		this.beanFactory.setSerializationId(getId());
 	}
+		
 
 	@Override
 	protected void cancelRefresh(BeansException ex) {

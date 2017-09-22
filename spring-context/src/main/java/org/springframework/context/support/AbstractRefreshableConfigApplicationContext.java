@@ -19,6 +19,7 @@ package org.springframework.context.support;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
@@ -119,7 +120,8 @@ public abstract class AbstractRefreshableConfigApplicationContext extends Abstra
 	 * @see org.springframework.core.env.Environment#resolveRequiredPlaceholders(String)
 	 */
 	protected String resolvePath(String path) {
-		return getEnvironment().resolveRequiredPlaceholders(path);
+		ConfigurableEnvironment environment  = this.getEnvironment();
+		return environment.resolveRequiredPlaceholders(path);
 	}
 
 

@@ -227,7 +227,7 @@ public abstract class FactoryBeanRegistrySupport extends DefaultSingletonBeanReg
 	 */
 	@Override
 	public void destroySingletons() {
-		super.destroySingletons();
+		super.destroySingletons();//org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons()
 		this.factoryBeanObjectCache.clear();
 	}
 

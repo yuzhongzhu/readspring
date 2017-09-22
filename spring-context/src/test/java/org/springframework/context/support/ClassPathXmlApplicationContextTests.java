@@ -72,7 +72,7 @@ public class ClassPathXmlApplicationContextTests {
 	private static final String TEST_PROPERTIES = "test.properties";
 
 
-	@Test
+	/*@Test
 	public void testSingleConfigLocation() {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(FQ_SIMPLE_CONTEXT);
 		assertTrue(ctx.containsBean("someMessageSource"));
@@ -120,7 +120,7 @@ public class ClassPathXmlApplicationContextTests {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(SIMPLE_CONTEXT, getClass());
 		assertTrue(ctx.containsBean("someMessageSource"));
 		ctx.close();
-	}
+	}*/
 
 	@Test
 	public void testAliasWithPlaceholder() {
@@ -132,7 +132,7 @@ public class ClassPathXmlApplicationContextTests {
 		ctx.refresh();
 	}
 
-	@Test
+	/*@Test
 	public void testContextWithInvalidValueType() throws IOException {
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
 				new String[] {INVALID_VALUE_TYPE_CONTEXT}, false);
@@ -399,6 +399,6 @@ public class ClassPathXmlApplicationContextTests {
 		assertTrue(ctx.containsBean("logicOne"));
 		assertTrue(ctx.containsBean("logicTwo"));
 		ctx.close();
-	}
+	}*/
 
 }
